@@ -1,0 +1,457 @@
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+--- /dev/null	(date 1687102291657)
++++ b/.idea/vcs.xml	(date 1687102291657)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/pom.xml b/pom.xml
+new file mode 100644
+--- /dev/null	(date 1687543302772)
++++ b/pom.xml	(date 1687543302772)
+@@ -0,0 +1,66 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++  <modelVersion>4.0.0</modelVersion>
++
++  <groupId>org.example</groupId>
++  <artifactId>untitled4</artifactId>
++  <version>1.0-SNAPSHOT</version>
++
++  <name>untitled4</name>
++  <!-- FIXME change it to the project's website -->
++  <url>http://www.example.com</url>
++
++  <properties>
++    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
++    <maven.compiler.source>11</maven.compiler.source>
++    <maven.compiler.target>11</maven.compiler.target>
++    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
++    <junit.version>5.9.1</junit.version>
++    <junit.jupiter.version>5.8.2</junit.jupiter.version>
++    <selenium.version>4.9.1</selenium.version>
++    <maven.compiler.source>1.8</maven.compiler.source>
++    <maven.compiler.target>1.8</maven.compiler.target>
++    <aspectj.version>1.8.13</aspectj.version>
++    <webdrivermanager.version>5.3.3</webdrivermanager.version>
++    <allure.version>2.15.0</allure.version>
++    <allure-maven.version>2.10.0</allure-maven.version>
++    <maven.surefire.plugin>2.22.0</maven.surefire.plugin>
++  </properties>
++
++  <dependencies>
++    <dependency>
++      <groupId>io.github.bonigarcia</groupId>
++      <artifactId>webdrivermanager</artifactId>
++      <version>${webdrivermanager.version}</version>
++      <scope>test</scope>
++    </dependency>
++    <dependency>
++      <groupId>org.seleniumhq.selenium</groupId>
++      <artifactId>selenium-java</artifactId>
++      <version>${selenium.version}</version>
++    </dependency>
++    <dependency>
++      <groupId>org.junit.jupiter</groupId>
++      <artifactId>junit-jupiter-engine</artifactId>
++      <version>${junit.version}</version>
++      <scope>test</scope>
++    </dependency>
++    <dependency>
++      <groupId>org.junit.jupiter</groupId>
++      <artifactId>junit-jupiter-api</artifactId>
++      <version>${junit.version}</version>
++      <scope>test</scope>
++    </dependency>
++
++
++
++
++  </dependencies>
++  <build>
++    <plugins>
++
++    </plugins>
++  </build>
++</project>
+\ No newline at end of file
+Index: src/test/java/org/example/AutoTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/org/example/AutoTest.java b/src/test/java/org/example/AutoTest.java
+new file mode 100644
+--- /dev/null	(date 1688620249574)
++++ b/src/test/java/org/example/AutoTest.java	(date 1688620249574)
+@@ -0,0 +1,84 @@
++package org.example;
++
++import io.github.bonigarcia.wdm.WebDriverManager;
++import org.junit.jupiter.api.Test;
++import org.openqa.selenium.*;
++import org.openqa.selenium.chrome.ChromeDriver;
++import org.openqa.selenium.chrome.ChromeOptions;
++import org.openqa.selenium.support.ui.ExpectedConditions;
++import org.openqa.selenium.support.ui.WebDriverWait;
++
++import java.time.Duration;
++import java.util.List;
++import java.util.NoSuchElementException;
++import java.util.concurrent.TimeUnit;
++
++
++
++public class AutoTest {
++
++    @Test
++            void autoTest () throws InterruptedException {
++            WebDriverManager.chromedriver().setup();
++
++            ChromeOptions options = new ChromeOptions();
++            options.addArguments("--incognito");
++            //options.addArguments("--headless");
++            options.addArguments("start-maximized");
++            options.addArguments("--remote-allow-origins=*");
++
++
++            WebDriver driver = new ChromeDriver(options);
++            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
++
++
++            driver.get("https://futlab.ru/FIFA23/");
++
++        WebElement webElement1 = driver.findElement(By.id("APP"));
++        WebElement webElement2 = driver.findElement(By.xpath("//input[@name=\"username\"]"));
++        WebElement webElement3 = driver.findElement(By.xpath("//input[@name=\"password\"]"));
++        WebElement webElement4 = driver.findElement(By.xpath("//*[@id=\"APP\"]/div/main/div[3]/div/div[1]/div/div/form/div[2]/button"));
++        
++        try {
++            WebElement webElementError = driver.findElement(By.name("error"));
++        } catch (NoSuchElementException e){
++            System.out.println(e.getCause());
++        }
++
++        List<WebElement> webElements = driver.findElements(By.name("error"));
++        if(webElements.size()>1){
++            //todo
++        }
++        webElement1.click();
++        webElement2.sendKeys("selena");
++        webElement3.sendKeys("Test111");
++        webElement4.click();
++
++        /*try {
++            Thread.sleep(10000);
++        } catch (InterruptedException e) {
++            e.printStackTrace();
++        }
++        new WebDriverWait(driver, 5).until(ExpectedConditions.urlContains("futlab"));
++
++        driver.navigate().to("https://futlab.ru/FIFA23/");
++
++        try {
++            webElement3.sendKeys("Test111");
++        } catch (StaleElementReferenceException e){
++            System.out.println(e.getSupportUrl());
++        }
++
++        try {
++            driver.findElement(By.xpath("APP")).click();
++        } catch (ElementNotInteractableException e){
++            System.out.println(e.getSupportUrl());
++        }
++
++*/
++        driver.quit();
++        driver.close();
++
++
++    }
++}
+Index: .idea/codeStyles/Project.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/codeStyles/Project.xml b/.idea/codeStyles/Project.xml
+new file mode 100644
+--- /dev/null	(date 1687102291673)
++++ b/.idea/codeStyles/Project.xml	(date 1687102291673)
+@@ -0,0 +1,7 @@
++<component name="ProjectCodeStyleConfiguration">
++  <code_scheme name="Project" version="173">
++    <ScalaCodeStyleSettings>
++      <option name="MULTILINE_STRING_CLOSING_QUOTES_ON_NEW_LINE" value="true" />
++    </ScalaCodeStyleSettings>
++  </code_scheme>
++</component>
+\ No newline at end of file
+Index: .idea/codeStyles/codeStyleConfig.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/codeStyles/codeStyleConfig.xml b/.idea/codeStyles/codeStyleConfig.xml
+new file mode 100644
+--- /dev/null	(date 1687102291682)
++++ b/.idea/codeStyles/codeStyleConfig.xml	(date 1687102291682)
+@@ -0,0 +1,5 @@
++<component name="ProjectCodeStyleConfiguration">
++  <state>
++    <option name="PREFERRED_PROJECT_CODE_STYLE" value="Default" />
++  </state>
++</component>
+\ No newline at end of file
+Index: .gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+--- /dev/null	(date 1687102285213)
++++ b/.gitignore	(date 1687102285213)
+@@ -0,0 +1,38 @@
++target/
++!.mvn/wrapper/maven-wrapper.jar
++!**/src/main/**/target/
++!**/src/test/**/target/
++
++### IntelliJ IDEA ###
++.idea/modules.xml
++.idea/jarRepositories.xml
++.idea/compiler.xml
++.idea/libraries/
++*.iws
++*.iml
++*.ipr
++
++### Eclipse ###
++.apt_generated
++.classpath
++.factorypath
++.project
++.settings
++.springBeans
++.sts4-cache
++
++### NetBeans ###
++/nbproject/private/
++/nbbuild/
++/dist/
++/nbdist/
++/.nb-gradle/
++build/
++!**/src/main/**/build/
++!**/src/test/**/build/
++
++### VS Code ###
++.vscode/
++
++### Mac OS ###
++.DS_Store
+\ No newline at end of file
+Index: .idea/encodings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/encodings.xml b/.idea/encodings.xml
+new file mode 100644
+--- /dev/null	(date 1687102432261)
++++ b/.idea/encodings.xml	(date 1687102432261)
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="Encoding">
++    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
++    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+new file mode 100644
+--- /dev/null	(date 1688592260443)
++++ b/.idea/workspace.xml	(date 1688592260443)
+@@ -0,0 +1,128 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="AutoImportSettings">
++    <option name="autoReloadType" value="SELECTIVE" />
++  </component>
++  <component name="ChangeListManager">
++    <list default="true" id="152757ff-e020-49c6-b31c-7e4b909ab9ad" name="Changes" comment="">
++      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/App.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/AppTest.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/AutoTest.java" afterDir="false" />
++    </list>
++    <option name="SHOW_DIALOG" value="false" />
++    <option name="HIGHLIGHT_CONFLICTS" value="true" />
++    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
++    <option name="LAST_RESOLUTION" value="IGNORE" />
++  </component>
++  <component name="CodeStyleSettingsInfer">
++    <option name="done" value="true" />
++  </component>
++  <component name="FileTemplateManagerImpl">
++    <option name="RECENT_TEMPLATES">
++      <list>
++        <option value="Class" />
++      </list>
++    </option>
++  </component>
++  <component name="Git.Settings">
++    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
++  </component>
++  <component name="MarkdownSettingsMigration">
++    <option name="stateVersion" value="1" />
++  </component>
++  <component name="ProjectCodeStyleSettingsMigration">
++    <option name="version" value="2" />
++  </component>
++  <component name="ProjectId" id="2RNtIO9wGVxyjAPLOA795liutCK" />
++  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
++  <component name="ProjectViewState">
++    <option name="autoscrollToSource" value="true" />
++    <option name="hideEmptyMiddlePackages" value="true" />
++    <option name="showLibraryContents" value="true" />
++  </component>
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
++    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
++    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
++    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
++    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.fileTypes&quot;
++  }
++}</component>
++  <component name="RunManager">
++    <configuration name="AutoTest.autoTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
++      <module name="untitled4" />
++      <extension name="coverage">
++        <pattern>
++          <option name="PATTERN" value="org.example.*" />
++          <option name="ENABLED" value="true" />
++        </pattern>
++      </extension>
++      <option name="PACKAGE_NAME" value="org.example" />
++      <option name="MAIN_CLASS_NAME" value="org.example.AutoTest" />
++      <option name="METHOD_NAME" value="autoTest" />
++      <option name="TEST_OBJECT" value="method" />
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
++    <recent_temporary>
++      <list>
++        <item itemvalue="JUnit.AutoTest.autoTest" />
++      </list>
++    </recent_temporary>
++  </component>
++  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
++  <component name="TaskManager">
++    <task active="true" id="Default" summary="Default task">
++      <changelist id="152757ff-e020-49c6-b31c-7e4b909ab9ad" name="Changes" comment="" />
++      <created>1687102289640</created>
++      <option name="number" value="Default" />
++      <option name="presentableId" value="Default" />
++      <updated>1687102289640</updated>
++    </task>
++    <servers />
++  </component>
++  <component name="Vcs.Log.Tabs.Properties">
++    <option name="TAB_STATES">
++      <map>
++        <entry key="MAIN">
++          <value>
++            <State />
++          </value>
++        </entry>
++      </map>
++    </option>
++  </component>
++  <component name="XDebuggerManager">
++    <breakpoint-manager>
++      <breakpoints>
++        <line-breakpoint enabled="true" type="java-line">
++          <url>file://$PROJECT_DIR$/src/test/java/org/example/AutoTest.java</url>
++          <line>83</line>
++          <option name="timeStamp" value="2" />
++        </line-breakpoint>
++        <line-breakpoint enabled="true" type="java-line">
++          <url>file://$PROJECT_DIR$/src/test/java/org/example/AutoTest.java</url>
++          <line>34</line>
++          <option name="timeStamp" value="3" />
++        </line-breakpoint>
++        <line-breakpoint enabled="true" type="java-line">
++          <url>file://$PROJECT_DIR$/src/test/java/org/example/AutoTest.java</url>
++          <line>36</line>
++          <option name="timeStamp" value="5" />
++        </line-breakpoint>
++      </breakpoints>
++    </breakpoint-manager>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+new file mode 100644
+--- /dev/null	(date 1687102346663)
++++ b/.idea/misc.xml	(date 1687102346663)
+@@ -0,0 +1,14 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ExternalStorageConfigurationManager" enabled="true" />
++  <component name="MavenProjectsManager">
++    <option name="originalFiles">
++      <list>
++        <option value="$PROJECT_DIR$/pom.xml" />
++      </list>
++    </option>
++  </component>
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="semeru-11 (2)" project-jdk-type="JavaSDK">
++    <output url="file://$PROJECT_DIR$/out" />
++  </component>
++</project>
+\ No newline at end of file
+diff --git a/src/main/java/org/example/App.java b/src/main/java/org/example/App.java
+new file mode 100644
+diff --git a/src/test/java/org/example/AppTest.java b/src/test/java/org/example/AppTest.java
+new file mode 100644
